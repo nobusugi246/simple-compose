@@ -1,0 +1,24 @@
+version: '2'
+
+services:
+  postgres:
+    image: postgres:9.6.5
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+
+  server:
+    image: jupyter/base-notebook
+    command: start-notebook.sh --NotebookApp.token=''
+    # command: start-notebook.sh --NotebookApp.password=''
+    ports:
+      - "7000:8888"
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    ports:
+      - "7100:8080"
+      - "50000:50000"
+    volumes:
+      - ./jenkins_home:/var/jenkins_home
